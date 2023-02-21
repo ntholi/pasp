@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'prism/prism.css' %}">
+    <link rel="stylesheet" href="{% static 'submissions.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-8">
+            <h1 class="h2">{{ assessment.course_name }}</h1>
+            <div class="d-flex align-items-center">
+                <h2 class="text-muted h4 me-3">{{ assessment.title }}</h2>
+                <div id="countdown-timer" class="bg-body-secondary border p-1"></div>
+            </div>
+            <hr/>
+            <p>
+                <a target="_blank"
+                   href="{{ assessment.question_paper.url }}">Download/View</a> {{ assessment.course_name }}, {{ assessment.title }}
+            </p>
+            <div class="card">
+                <div class="card-body" id="preview">
+                    {% if form.instance.attachment %}
+                        <p>Preview of your file:</p>
+                        {% if form.instance.attachment.content_type == 'application/pdf' %}
+                            <embed src="{{ form.instance.attachment.url }}" width="100%" height="500">
+                        {% else %}
+                            <img src="{{ form.instance.attachment.url }}" alt="Attachment" width="100%">
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="fw-light">Submissions</h4>
+                    </div>
+                    <div class="card-body py-4">
+                        {% if submitted %}
+                            <p class="text-success-emphasis">Submitted</p>
+                        {% else %}
+                            <p class="text-danger-emphasis">Not Submitted</p>
+                        {% endif %}
+
+                        {{ form|crispy }}
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" id="previewBtn" class="btn btn-outline-light">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const endTime = new Date("{{ assessment.end_time|date:'Y/m/d H:i:s' }}");
+        const serverTime = new Date("{{ server_time|date:'Y/m/d H:i:s' }}");
+        let timeDifference = endTime - serverTime;
+    </script>
+    <script src="{% static 'submissions.js' %}"></script>
+
+
+    <script src="{% static 'prism/prism.js' %}"></script>
+    <script src="{% static 'file-preview.js' %}"></script>
+{% endblock %}
