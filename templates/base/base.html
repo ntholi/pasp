@@ -1,0 +1,27 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href='{% static 'bootstrap.min.css' %}'>
+    <link rel="stylesheet" href='{% static 'style.css' %}'>
+    {% block stylesheets %}
+
+    {% endblock %}
+    <title>PassWap</title>
+</head>
+<body>
+<div class="page-wrapper">
+    {% include 'base/nav.html' %}
+    <main class="container mt-5">
+        {% block content %}{% endblock %}
+    </main>
+    {% include 'base/footer.html' %}
+</div>
+<script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'base.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
