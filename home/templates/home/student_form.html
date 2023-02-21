@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label for="student_number">Student Number:</label>
+            <input type="text" id="student_number" name="student_number" minlength="9" maxlength="9" placeholder="Student Number" required>
+        </p>
+
+        <p>
+            <label for="student_name">Names</label>
+            <input type="text" id="student_name" name="student_name" placeholder="Name and Surname" required>
+        </p>
+
+        <input type="submit" value="Enter">
+    </form>
+{% endblock %}
