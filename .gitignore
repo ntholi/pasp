@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+
+# C extensions
+*.so
+*.dll
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Django-specific files
+db.sqlite3
+*.log
+*.pot
+
+# PyCharm-specific files and directories
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/jsLibraryMappings.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/scopes/
+.idea/vcs.xml
+.idea/version.vcs.xml
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/uiDesigner.xml
+.idea/runConfigurations/*
+
+# Other files and directories to ignore
+*.swp
+.DS_Store
