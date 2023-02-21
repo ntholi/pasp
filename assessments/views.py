@@ -11,7 +11,9 @@ class IndexView(generic.ListView):
 
 
 def create_step1(request):
-    form = AssessmentFormStep1()
+    initial_data = {'lecturer': request.session.get('lecturer', ''),
+                    'email': request.session.get('email', '')}
+    form = AssessmentFormStep1(initial=initial_data)
     if request.method == "POST":
         if "step1" in request.POST:
             form = AssessmentFormStep1(request.POST)
@@ -23,12 +25,16 @@ def create_step1(request):
 
 
 def create_step2(request):
+    lecturer = request.session.get("lecturer")
+    email = request.session.get("email")
+
+    if (not lecturer) or (not email):
+        return redirect("assessments:create")
+
     form = AssessmentFormStep2()
     if request.method == "POST":
         form = AssessmentFormStep2(request.POST, request.FILES)
         if form.is_valid():
-            lecturer = request.session.get("lecturer")
-            email = request.session.get("email")
             assessment = form.save(commit=False)
             assessment.lecturer = lecturer
             assessment.email = email
