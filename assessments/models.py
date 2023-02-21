@@ -29,9 +29,9 @@ class Assessment(models.Model):
     cover_image = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
-        self.question_paper.name = (
-            f"{self.uuid}.pdf"
-        )
+        # self.question_paper.name = (
+        #     f"{self.uuid}.pdf"
+        # )
         self.cover_image = get_image()
         super().save(*args, **kwargs)
 
