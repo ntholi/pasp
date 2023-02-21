@@ -2,6 +2,7 @@ import os
 import random
 import uuid
 from django.contrib.staticfiles import finders
+from django.core.validators import FileExtensionValidator
 
 from django.db import models
 

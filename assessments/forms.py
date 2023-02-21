@@ -1,3 +1,5 @@
+from django.core.validators import FileExtensionValidator
+
 from assessments.models import Assessment
 
 from django import forms
@@ -10,8 +12,9 @@ class AssessmentFormStep1(forms.ModelForm):
 
 
 class AssessmentFormStep2(forms.ModelForm):
-    attachment = forms.FileField(
-        widget=forms.FileInput(attrs={"question_paper": "application/pdf"})
+    question_paper = forms.FileField(
+        widget=forms.FileInput(attrs={"accept": "application/pdf"}),
+        validators=[FileExtensionValidator(['pdf'])]
     )
 
     class Meta:
@@ -20,7 +23,6 @@ class AssessmentFormStep2(forms.ModelForm):
             "title",
             "course_name",
             "course_code",
-            "question_paper",
             "start_time",
             "end_time",
         ]
