@@ -30,7 +30,7 @@ class Assessment(models.Model):
 
     def save(self, *args, **kwargs):
         self.question_paper.name = (
-            f"{self.uuid}.{self.question_paper.name.split('.')[-1]}"
+            f"{self.uuid}.pdf"
         )
         self.cover_image = get_image()
         super().save(*args, **kwargs)

@@ -45,3 +45,5 @@ db.sqlite3
 # Other files and directories to ignore
 *.swp
 .DS_Store
+/uploads/
+/.idea/dataSources.xml
