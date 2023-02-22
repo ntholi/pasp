@@ -1,8 +1,10 @@
 import os
+from pathlib import Path
 import random
 import uuid
 from django.contrib.staticfiles import finders
-from django.core.validators import FileExtensionValidator
+import string
+from datetime import datetime
 
 from django.db import models
 
@@ -16,6 +18,39 @@ def get_image():
     return random.choice(files)
 
 
+def get_term():
+    current_date = datetime.now()
+    current_year = current_date.year
+    if current_date.month < 8:
+        semester = "02"  # Spring semester
+    else:
+        semester = "08"  # Fall semester
+    return f"{current_year}-{semester}"
+
+
+def make_valid_file_name(name):
+    valid_name = "-_.() %s%s" % (string.ascii_letters, string.digits)
+    " ".join([word.capitalize() for word in valid_name.split()])
+    cleaned_name = ''.join(c if c in valid_name else '-' for c in name)
+    return cleaned_name.strip('-')
+
+
+def get_upload_folder(assessment):
+    lecturer = make_valid_file_name(assessment.lecturer)
+    folder_path = f"{get_term()}/{lecturer}/Assessment"
+    folder_path = Path(folder_path)
+
+    counter = 1
+    while True:
+        full_folder_name = f'{folder_path}-{counter:02d}'
+        if not os.path.exists(full_folder_name):
+            os.makedirs(full_folder_name)
+            break
+        counter += 1
+
+    return full_folder_name
+
+
 class Assessment(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
@@ -23,15 +58,15 @@ class Assessment(models.Model):
     email = models.EmailField(max_length=100)
     course_name = models.CharField(max_length=100)
     course_code = models.CharField(max_length=20, blank=True)
-    question_paper = models.FileField(upload_to="question_papers/", blank=True)
+    question_paper = models.FileField(blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
 
     def save(self, *args, **kwargs):
-        # self.question_paper.name = (
-        #     f"{self.uuid}.pdf"
-        # )
+        self.question_paper.name = (
+            f'{get_upload_folder(self)}/question_paper.pdf'
+        )
         self.cover_image = get_image()
         super().save(*args, **kwargs)
 
