@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.views import generic
 from django.utils import timezone
 from datetime import timedelta
 
 from assessments.models import Assessment
 from submissions.forms import SubmissionForm
-from submissions.models import Submission, Student
+from submissions.models import Student
 
 
 def get_or_create_student(request):

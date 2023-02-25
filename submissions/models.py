@@ -19,5 +19,14 @@ class Submission(models.Model):
     submission_time = models.DateTimeField(auto_now_add=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        file_extension = self.attachment.name.split('.')[-1]
+        upload_folder = self.assessment.question_paper.name.split('/')[:-1]
+        upload_folder = '/'.join(upload_folder) + '/submissions'
+        self.attachment.name = (
+            f'{upload_folder}/{self.student.student_number}.{file_extension}'
+        )
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Submission for ({self.assessment.title})"
