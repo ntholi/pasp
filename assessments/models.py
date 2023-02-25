@@ -35,22 +35,6 @@ def make_valid_file_name(name):
     return cleaned_name.strip('-')
 
 
-def get_upload_folder(assessment):
-    lecturer = make_valid_file_name(assessment.lecturer)
-    folder_path = f"{get_term()}/{lecturer}/Assessment"
-    folder_path = Path(folder_path)
-
-    counter = 1
-    while True:
-        full_folder_name = f'{folder_path}-{counter:02d}'
-        if not os.path.exists(full_folder_name):
-            os.makedirs(full_folder_name)
-            break
-        counter += 1
-
-    return full_folder_name
-
-
 class Assessment(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
@@ -63,9 +47,24 @@ class Assessment(models.Model):
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
 
+    def get_upload_folder(self):
+        lecturer = make_valid_file_name(self.lecturer)
+        folder_path = f"{get_term()}/{lecturer}/Assessment"
+        folder_path = Path(folder_path)
+
+        counter = 1
+        while True:
+            full_folder_name = f'{folder_path}-{counter:02d}'
+            if not os.path.exists(full_folder_name):
+                os.makedirs(full_folder_name)
+                break
+            counter += 1
+
+        return full_folder_name
+
     def save(self, *args, **kwargs):
         self.question_paper.name = (
-            f'{get_upload_folder(self)}/question_paper.pdf'
+            f'{self.get_upload_folder()}/question_paper.pdf'
         )
         self.cover_image = get_image()
         super().save(*args, **kwargs)
