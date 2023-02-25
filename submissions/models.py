@@ -12,20 +12,23 @@ class Student(models.Model):
 
 
 class Submission(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.CharField(max_length=20, primary_key=True, editable=False)
     attachment = models.FileField()
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField()
     submission_time = models.DateTimeField(auto_now_add=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    submission_times = models.IntegerField(default=1)
 
     def save(self, *args, **kwargs):
+        student_number = self.student.student_number
         file_extension = self.attachment.name.split('.')[-1]
         upload_folder = self.assessment.question_paper.name.split('/')[:-1]
         upload_folder = '/'.join(upload_folder) + '/submissions'
         self.attachment.name = (
-            f'{upload_folder}/{self.student.student_number}.{file_extension}'
+            f'{upload_folder}/{student_number}.{file_extension}'
         )
+        self.id = f"{self.assessment_id}_{student_number}"
         super().save(*args, **kwargs)
 
     def __str__(self):

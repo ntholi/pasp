@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from assessments.models import Assessment
 from submissions.forms import SubmissionForm
-from submissions.models import Student
+from submissions.models import Student, Submission
 
 
 def get_or_create_student(request):
@@ -21,13 +21,8 @@ def view(request, assessment_id):
     server_time = timezone.now() + timedelta(hours=2)
 
     if request.method == "POST":
-        form = SubmissionForm(request.POST, request.FILES)
-        if form.is_valid():
-            submission = form.save(commit=False)
-            submission.assessment = assessment
-            submission.student = get_or_create_student(request)
-            submission.ip_address = request.META.get('REMOTE_ADDR')
-            submission.save()
+        student = get_or_create_student(request)
+        form = __create_student_submission(request, student, assessment)
     else:
         form = SubmissionForm()
 
@@ -38,3 +33,20 @@ def view(request, assessment_id):
         "server_time": server_time,
     }
     return render(request, "submissions/view.html", context=context)
+
+
+def __create_student_submission(request, student, assessment):
+    form = SubmissionForm(request.POST, request.FILES)
+    if form.is_valid():
+        submission_id = f"{assessment.id}_{student.student_number}"
+        submission, created = Submission.objects.get_or_create(
+            id=submission_id,
+            assessment=assessment,
+            student=student,
+            attachment=request.FILES["attachment"],
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
+        if not created:
+            submission.submission_times += 1
+        submission.save()
+    return form
