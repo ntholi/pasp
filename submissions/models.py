@@ -1,3 +1,4 @@
+import os.path
 import uuid
 from django.db import models
 from assessments.models import Assessment
@@ -23,8 +24,8 @@ class Submission(models.Model):
     def save(self, *args, **kwargs):
         student_number = self.student.student_number
         file_extension = self.attachment.name.split(".")[-1]
-        upload_folder = "/".join(self.assessment.upload_folder) + "/submissions"
-        self.attachment.name = f"{upload_folder}/{student_number}.{file_extension}"
+        file_name = f"{student_number}.{file_extension}"
+        self.attachment.name = os.path.join(self.assessment.upload_folder, file_name)
         self.id = f"{self.assessment_id}_{student_number}"
         super().save(*args, **kwargs)
 
