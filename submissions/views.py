@@ -24,7 +24,10 @@ def view(request, assessment_id):
     if request.method == "POST":
         student = get_or_create_student(request)
         form = __create_student_submission(request, student, assessment)
-        alert = {"message": "Submitted Successfully", "type": "alert-success"}
+        alert = {
+            "message": f"{assessment.title} Submitted Successfully",
+            "type": "alert-success",
+        }
     else:
         form = SubmissionForm()
 

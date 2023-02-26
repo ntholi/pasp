@@ -22,8 +22,9 @@
                    href="{{ assessment.question_paper.url }}">Download/View</a> {{ assessment.course_name }}, {{ assessment.title }}
             </p>
             {% if alert %}
-                <div class="alert {{ alert.type }}" role="alert">
+                <div class="alert {{ alert.type }} alert-dismissible fade show" style="background: inherit" role="alert">
                     {{ alert.message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             {% endif %}
             <div class="card">
