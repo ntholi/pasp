@@ -5,6 +5,7 @@ import uuid
 from django.contrib.staticfiles import finders
 import string
 from datetime import datetime
+from django.conf import settings
 
 from django.db import models
 
@@ -52,12 +53,13 @@ class Assessment(models.Model):
         lecturer = make_valid_file_name(self.lecturer)
         folder_path = f"{get_term()}/{lecturer}/Assessment"
         folder_path = Path(folder_path)
+        media_url = settings.MEDIA_URL
 
         counter = 1
         while True:
             full_folder_name = f"{folder_path}-{counter:02d}"
-            if not os.path.exists(full_folder_name):
-                os.makedirs(full_folder_name)
+            if not os.path.exists(f"{media_url}/{full_folder_name}"):
+                os.makedirs(f"{media_url}/{full_folder_name}")
                 break
             counter += 1
 
