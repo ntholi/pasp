@@ -31,8 +31,8 @@ def get_term():
 def make_valid_file_name(name):
     valid_name = "-_.() %s%s" % (string.ascii_letters, string.digits)
     " ".join([word.capitalize() for word in valid_name.split()])
-    cleaned_name = ''.join(c if c in valid_name else '-' for c in name)
-    return cleaned_name.strip('-')
+    cleaned_name = "".join(c if c in valid_name else "-" for c in name)
+    return cleaned_name.strip("-")
 
 
 class Assessment(models.Model):
@@ -46,15 +46,16 @@ class Assessment(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
+    upload_folder = models.CharField(max_length=255)
 
-    def get_upload_folder(self):
+    def __get_upload_folder(self):
         lecturer = make_valid_file_name(self.lecturer)
         folder_path = f"{get_term()}/{lecturer}/Assessment"
         folder_path = Path(folder_path)
 
         counter = 1
         while True:
-            full_folder_name = f'{folder_path}-{counter:02d}'
+            full_folder_name = f"{folder_path}-{counter:02d}"
             if not os.path.exists(full_folder_name):
                 os.makedirs(full_folder_name)
                 break
@@ -63,9 +64,8 @@ class Assessment(models.Model):
         return full_folder_name
 
     def save(self, *args, **kwargs):
-        self.question_paper.name = (
-            f'{self.get_upload_folder()}/question_paper.pdf'
-        )
+        self.upload_folder = self.__get_upload_folder()
+        self.question_paper.name = f"{self.upload_folder}/question_paper.pdf"
         self.cover_image = get_image()
         super().save(*args, **kwargs)
 
