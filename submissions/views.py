@@ -19,6 +19,7 @@ def get_or_create_student(request):
 def view(request, assessment_id):
     assessment = get_object_or_404(Assessment, pk=assessment_id)
     server_time = timezone.now() + timedelta(hours=2)
+    alert = None
 
     if request.method == "POST":
         student = get_or_create_student(request)
@@ -41,10 +42,12 @@ def __create_student_submission(request, student, assessment):
         submission_id = f"{assessment.id}_{student.student_number}"
         submission, created = Submission.objects.get_or_create(
             id=submission_id,
-            assessment=assessment,
-            student=student,
-            attachment=request.FILES["attachment"],
-            ip_address=request.META.get("REMOTE_ADDR"),
+            defaults={
+                "assessment": assessment,
+                "student": student,
+                "attachment": request.FILES["attachment"],
+                "ip_address": request.META.get("REMOTE_ADDR"),
+            },
         )
         if not created:
             submission.submission_times += 1
