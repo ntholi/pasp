@@ -24,6 +24,7 @@ def view(request, assessment_id):
     if request.method == "POST":
         student = get_or_create_student(request)
         form = __create_student_submission(request, student, assessment)
+        alert = {"message": "Submitted Successfully", "type": "alert-success"}
     else:
         form = SubmissionForm()
 
@@ -32,6 +33,7 @@ def view(request, assessment_id):
         "assessment": assessment,
         "submitted": request.method == "POST",
         "server_time": server_time,
+        "alert": alert,
     }
     return render(request, "submissions/view.html", context=context)
 
