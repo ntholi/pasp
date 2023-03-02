@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from datetime import timedelta
+import pytz
 
 from assessments.models import Assessment
 from submissions.forms import SubmissionForm
@@ -18,7 +18,7 @@ def get_or_create_student(request):
 
 def view(request, assessment_id):
     assessment = get_object_or_404(Assessment, pk=assessment_id)
-    server_time = timezone.now() + timedelta(hours=2)
+    now = timezone.now().astimezone(pytz.timezone("Africa/Maseru"))
     alert = None
 
     if request.method == "POST":
@@ -35,7 +35,7 @@ def view(request, assessment_id):
         "form": form,
         "assessment": assessment,
         "submitted": request.method == "POST",
-        "server_time": server_time,
+        "server_time": now,
         "alert": alert,
     }
     return render(request, "submissions/view.html", context=context)
