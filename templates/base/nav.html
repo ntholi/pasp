@@ -2,6 +2,9 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid justify-content-start">
         <img src="{% static 'images/logo_sm.png' %}" alt="logo">
-        <a class="navbar-brand app-name fs-3" href="{% url 'home:index' %}">Pasp</a>
+        <a class="navbar-brand app-name fs-3 me-auto" href="{% url 'home:index' %}">Pasp</a>
+        {% if request.COOKIES.student_number %}
+            <a href="{% url 'home:end_session' %}" type="button" class="btn btn-secondary btn-sm">Logout</a>
+        {% endif %}
     </div>
 </nav>

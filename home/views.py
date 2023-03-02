@@ -34,7 +34,7 @@ def home(request):
         return redirect("home:student_form")
 
 
-def student_form(request):
+def new_session(request):
     if request.method == "POST":
         student_name = request.POST.get("student_name")
         student_number = request.POST.get("student_number")
@@ -57,3 +57,10 @@ def test_send_email(request):
         fail_silently=False,
     )
     return HttpResponse("Email Send, hopefully")
+
+
+def end_session(request):
+    response = redirect("home:student_form")
+    response.delete_cookie("student_name")
+    response.delete_cookie("student_number")
+    return response
