@@ -18,8 +18,11 @@
             </div>
             <hr/>
             <p>
+            {% if not assessment.question_paper %}
                 <a target="_blank"
-                   href="{{ assessment.question_paper.url }}">Download/View</a> {{ assessment.course_name }}, {{ assessment.title }}
+                   href="{{ assessment.question_paper.url }}">Download/View</a>
+            {% endif %}
+            {{ assessment.course_name }}, {{ assessment.title }}
             </p>
             {% if alert %}
                 <div class="alert {{ alert.type }} alert-dismissible fade show" style="background: inherit" role="alert">
