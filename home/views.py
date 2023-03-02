@@ -9,7 +9,7 @@ from assessments.models import Assessment
 
 
 def student_form(request):
-    return render(request, "home/student_form.html")
+    return render(request, "home/session_form.html")
 
 
 def home(request):
@@ -44,7 +44,7 @@ def student_form(request):
         return response
     return render(
         request,
-        "home/student_form.html",
+        "home/session_form.html",
     )
 
 
