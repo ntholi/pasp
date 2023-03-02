@@ -1,9 +1,9 @@
 from django.core.mail import send_mail
+import pytz
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils import timezone
-from datetime import timedelta
 
 from assessments.models import Assessment
 
@@ -13,7 +13,7 @@ def student_form(request):
 
 
 def home(request):
-    now = timezone.now() + timedelta(hours=2)
+    now = timezone.now().astimezone(pytz.timezone("Africa/Maseru"))
     if "student_name" in request.COOKIES and "student_number" in request.COOKIES:
         student_name = request.COOKIES.get("student_name")
         student_number = request.COOKIES.get("student_number")
