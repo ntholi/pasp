@@ -18,14 +18,15 @@
             </div>
             <hr/>
             <p>
-            {% if not assessment.question_paper %}
-                <a target="_blank"
-                   href="{{ assessment.question_paper.url }}">Download/View</a>
-            {% endif %}
-            {{ assessment.course_name }}, {{ assessment.title }}
+                {% if not assessment.question_paper %}
+                    <a target="_blank"
+                       href="{{ assessment.question_paper.url }}">Download/View</a>
+                {% endif %}
+                {{ assessment.course_name }}, {{ assessment.title }}
             </p>
             {% if alert %}
-                <div class="alert {{ alert.type }} alert-dismissible fade show" style="background: inherit" role="alert">
+                <div class="alert {{ alert.type }} alert-dismissible fade show" style="background: inherit"
+                     role="alert">
                     {{ alert.message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -39,6 +40,12 @@
                         {% else %}
                             <img src="{{ form.instance.attachment.url }}" alt="Attachment" width="100%">
                         {% endif %}
+                    {% else %}
+                        <i>
+                            A preview of your attached file will be displayed here. Please note that only one file can be
+                            attached and submitted. In case you need to submit a project folder or multiple files,
+                            kindly zip your files/folder into a single file and attach it.
+                        </i>
                     {% endif %}
                 </div>
             </div>
