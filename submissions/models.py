@@ -1,11 +1,12 @@
 import os.path
-import uuid
 from django.db import models
 from assessments.models import Assessment
 
 
 class Student(models.Model):
-    student_number = models.CharField(max_length=9, unique=True)
+    student_number = models.CharField(
+        max_length=9, unique=True, blank=False, null=False
+    )
     full_names = models.CharField(max_length=100)
 
     def __str__(self):

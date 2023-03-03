@@ -11,7 +11,8 @@ def get_or_create_student(request):
     student_name = request.COOKIES.get("student_name")
     student_number = request.COOKIES.get("student_number")
     student = Student.objects.get_or_create(
-        student_number=student_number, defaults={"full_names": student_name}
+        student_number=student_number,
+        defaults={"full_names": student_name, "student_number": student_number},
     )
     return student[0]
 
