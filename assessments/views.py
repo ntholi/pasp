@@ -5,14 +5,19 @@ from assessments.forms import AssessmentFormStep1, AssessmentFormStep2
 from assessments.models import Assessment
 
 
-class IndexView(generic.ListView):
-    template_name = "assessments/index.html"
-    queryset = Assessment.objects.all()
+def index(request):
+    return render(request, "assessments/index.html")
+
+
+class DetailView(generic.DetailView):
+    model = Assessment
 
 
 def create_step1(request):
-    initial_data = {'lecturer': request.session.get('lecturer', ''),
-                    'email': request.session.get('email', '')}
+    initial_data = {
+        "lecturer": request.session.get("lecturer", ""),
+        "email": request.session.get("email", ""),
+    }
     form = AssessmentFormStep1(initial=initial_data)
     if request.method == "POST":
         if "step1" in request.POST:
@@ -43,5 +48,5 @@ def create_step2(request):
     return render(request, "assessments/create_step2.html", {"form": form})
 
 
-class DetailView(generic.DetailView):
-    model = Assessment
+def create_successful(request):
+    return render(request, "assessments/create_successful.html")
