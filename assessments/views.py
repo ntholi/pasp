@@ -9,8 +9,9 @@ def index(request):
     return render(request, "assessments/index.html")
 
 
-class DetailView(generic.DetailView):
-    model = Assessment
+def details(request, uuid):
+    assessment = Assessment.objects.get(uuid=uuid)
+    return render(request, "assessments/details.html", {"assessment": assessment})
 
 
 def create_step1(request):
@@ -44,5 +45,5 @@ def create_step2(request):
             assessment.lecturer = lecturer
             assessment.email = email
             assessment.save()
-            return redirect("assessments:details", pk=assessment.pk, newly_created=True)
+            return redirect("assessments:details", uuid=assessment.uuid)
     return render(request, "assessments/create_step2.html", {"form": form})
