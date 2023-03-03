@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3">
-        <h1 class="display-4">{assessment.name}</h1>
+        <h1 class="display-4">{{assessment}}</h1>
         <a class="btn btn-light" href="{% url 'assessments:create' %}">Create</a>
     </div>
     <hr />

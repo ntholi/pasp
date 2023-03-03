@@ -44,9 +44,21 @@ def create_step2(request):
             assessment.lecturer = lecturer
             assessment.email = email
             assessment.save()
-            return redirect("assessments:index")
+            request.session["assessment_id"] = assessment.pk
+            return redirect("assessments:create_successful")
     return render(request, "assessments/create_step2.html", {"form": form})
 
 
 def create_successful(request):
-    return render(request, "assessments/create_successful.html")
+    assessment_id = request.session.get("assessment_id")
+    if assessment_id:
+        assessment = Assessment.objects.get(pk=assessment_id)
+        print("assessment_id: ", assessment_id)
+        print("assessment: ", assessment)
+        # del request.session["assessment_id"]
+        return render(
+            request,
+            "assessments/create_successful.html",
+            {"assessment": assessment},
+        )
+    return redirect("assessments:index")
