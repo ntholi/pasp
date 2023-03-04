@@ -47,12 +47,13 @@ class Assessment(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
+    upload_folder = models.FilePathField()
 
     def get_upload_folder(self):
         lecturer = make_valid_file_name(self.lecturer)
         folder_path = f"{get_term()}/{lecturer}/Assessment"
         folder_path = Path(folder_path)
-        media_url = settings.MEDIA_URL
+        media_url = settings.MEDIA_ROOT
 
         counter = 1
         while True:
