@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -12,12 +13,16 @@ def index(request):
 
 def details(request, uuid):
     assessment = Assessment.objects.get(uuid=uuid)
+    if not assessment:
+        raise Http404("Assessment does not exist")
     newly_created = request.GET.get("newly_created", 0)
-    print(f"newly_created: {newly_created}")
     return render(
         request,
         "assessments/details.html",
-        {"assessment": assessment, "newly_created": newly_created},
+        {
+            "assessment": assessment,
+            "newly_created": newly_created,
+        },
     )
 
 

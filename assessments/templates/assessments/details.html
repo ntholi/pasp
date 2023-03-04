@@ -3,8 +3,41 @@
 {% block content %}
     <h1 class="display-4">{{assessment}}</h1>
     <p>{{ assessment.course_name }}</p>
-    <hr />
     {% if newly_created %}
-        <h2>Hello NewlyCreated</h2>
+        <hr />
+        <div class="input-group">
+          <input id="secret-key" type="text" class="form-control" value="{{ assessment.uuid }}">
+          <button id="copy-button" class="btn btn-secondary" type="button">Copy</button>
+        </div>
+    {% else %}
+        <!-- Displays assessment submissions -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Submissions</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Student</th>
+                            <th scope="col">IP Address</th>
+                            <th scope="col">Submission Time</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for submission in submissions %}
+                            <tr>
+                                <td>{{ submission.student }}</td>
+                                <td>{{ submission.ip_address }}</td>
+                                <td>{{ submission.submitted_at }}</td>
+                                <td>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
