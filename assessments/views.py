@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import generic
 
 from assessments.forms import AssessmentFormStep1, AssessmentFormStep2
@@ -11,7 +12,13 @@ def index(request):
 
 def details(request, uuid):
     assessment = Assessment.objects.get(uuid=uuid)
-    return render(request, "assessments/details.html", {"assessment": assessment})
+    newly_created = request.GET.get("newly_created", 0)
+    print(f"newly_created: {newly_created}")
+    return render(
+        request,
+        "assessments/details.html",
+        {"assessment": assessment, "newly_created": newly_created},
+    )
 
 
 def create_step1(request):
@@ -45,5 +52,7 @@ def create_step2(request):
             assessment.lecturer = lecturer
             assessment.email = email
             assessment.save()
-            return redirect("assessments:details", uuid=assessment.uuid)
+            redirect_url = reverse("assessments:details", args=(assessment.uuid,))
+            return redirect(f"{redirect_url}?newly_created=1")
+
     return render(request, "assessments/create_step2.html", {"form": form})

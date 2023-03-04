@@ -2,6 +2,9 @@
 
 {% block content %}
     <h1 class="display-4">{{assessment}}</h1>
-    <p>{{ newly_created }}</p>
+    <p>{{ assessment.course_name }}</p>
     <hr />
+    {% if newly_created %}
+        <h2>Hello NewlyCreated</h2>
+    {% endif %}
 {% endblock %}
