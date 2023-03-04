@@ -39,13 +39,15 @@
     <script>
         const copyButton = document.getElementById('copy-button');
         const secretKey = document.getElementById('secret-id');
+        copyButton.addEventListener('click', function(event) {
+            navigator.clipboard.writeText(secretKey.value)
+              .catch((err) => {
+                console.error('Error copying text: ', err);
+                secretKey.select();
+                document.execCommand('copy');
+              });
+        });
 
-        navigator.clipboard.writeText(secretKey.value)
-          .catch((err) => {
-            console.error('Error copying text: ', err);
-            secretKey.select();
-            document.execCommand('copy');
-          });
 
     </script>
 {% endblock %}
