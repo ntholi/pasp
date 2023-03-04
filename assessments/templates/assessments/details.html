@@ -6,7 +6,7 @@
     <hr />
     {% if newly_created %}
         <div class="input-group">
-          <input id="secret-key" type="text" class="form-control" value="{{ assessment.uuid }}">
+          <input id="secret-id" type="text" class="form-control" value="{{ assessment.uuid }}">
           <button id="copy-button" class="btn btn-secondary" type="button">Copy</button>
         </div>
     {% else %}
@@ -31,4 +31,16 @@
             </tbody>
         </table>
     {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const copyButton = document.getElementById('copy-button');
+        const secretKey = document.getElementById('secret-id');
+        secretKey.select()
+        navigator.clipboard.writeText(secretKey.value)
+          .catch((err) => {
+            console.error('Error copying text: ', err);
+          });
+    </script>
 {% endblock %}
