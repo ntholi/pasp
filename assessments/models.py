@@ -48,6 +48,7 @@ class Assessment(models.Model):
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
     upload_folder = models.FilePathField()
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def get_upload_folder(self):
         lecturer = make_valid_file_name(self.lecturer)

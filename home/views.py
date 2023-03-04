@@ -17,7 +17,9 @@ def home(request):
     if "student_name" in request.COOKIES and "student_number" in request.COOKIES:
         student_name = request.COOKIES.get("student_name")
         student_number = request.COOKIES.get("student_number")
-        assessments = Assessment.objects.filter()
+
+        assessments = Assessment.objects.all().order_by("-date_created")
+
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         context = {
             "student_name": student_name,
