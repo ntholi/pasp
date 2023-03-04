@@ -20,15 +20,10 @@ def get_or_create_student(request):
 def index(request, assessment_id):
     assessment = get_object_or_404(Assessment, pk=assessment_id)
     now = timezone.now().astimezone(pytz.timezone("Africa/Maseru"))
-    alert = None
 
     if request.method == "POST":
         student = get_or_create_student(request)
         form = __create_student_submission(request, student, assessment)
-        alert = {
-            "message": f"{assessment.title} Submitted Successfully",
-            "type": "alert-success",
-        }
     else:
         form = SubmissionForm()
 
@@ -37,7 +32,6 @@ def index(request, assessment_id):
         "assessment": assessment,
         "submitted": request.method == "POST",
         "server_time": now,
-        "alert": alert,
     }
     return render(request, "submissions/index.html", context=context)
 
