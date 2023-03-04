@@ -13,7 +13,7 @@
     {% for assessment in assessments %}
         {% if assessment.start_time|now_or_after %}
             <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
-                class="card clickable" href="{% url 'index' assessment.id %}">
+                class="card clickable" href="{% url 'submissions:index' assessment.id %}">
                 {% include 'home/assessment_card.html' with assessment=assessment %}
             </a>
         {% else %}
