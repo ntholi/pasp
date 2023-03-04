@@ -26,7 +26,7 @@ class Submission(models.Model):
         student_number = self.student.student_number
         file_extension = self.attachment.name.split(".")[-1]
         file_name = f"{student_number}.{file_extension}"
-        self.attachment.name = os.path.join(self.assessment.get_upload_folder(), file_name)
+        self.attachment.name = os.path.join(self.assessment.upload_folder, file_name)
         self.id = f"{self.assessment_id}_{student_number}"
         super().save(*args, **kwargs)
 

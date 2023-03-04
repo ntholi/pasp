@@ -6,7 +6,6 @@ from django.contrib.staticfiles import finders
 import string
 from datetime import datetime
 from django.conf import settings
-import time
 
 from django.db import models
 
@@ -55,14 +54,19 @@ class Assessment(models.Model):
         folder_path = Path(folder_path)
         media_url = settings.MEDIA_URL
 
-        timestamp = time.time()
-        full_folder_name = f"{folder_path}-{timestamp}"
-        os.makedirs(f"{media_url}/{full_folder_name}")
+        counter = 1
+        while True:
+            full_folder_name = f"{folder_path}-{counter:02d}"
+            if not os.path.exists(f"{media_url}/{full_folder_name}"):
+                os.makedirs(f"{media_url}/{full_folder_name}")
+                break
+            counter += 1
 
         return full_folder_name
 
     def save(self, *args, **kwargs):
-        self.question_paper.name = f"{self.get_upload_folder()}/question_paper.pdf"
+        self.upload_folder = self.get_upload_folder()
+        self.question_paper.name = f"{self.upload_folder}/question_paper.pdf"
         self.cover_image = get_image()
         super().save(*args, **kwargs)
 
