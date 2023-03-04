@@ -5,6 +5,8 @@
     <p>{{ assessment.course_name }}</p>
     <hr />
     {% if newly_created %}
+        <h3 class="h6">Assessment created successfully</h3>
+        <p>Please copy and save the following secret id, you will use it to view student submissions</p>
         <div class="input-group">
           <input id="secret-id" type="text" class="form-control" value="{{ assessment.uuid }}">
           <button id="copy-button" class="btn btn-secondary" type="button">Copy</button>
@@ -37,10 +39,13 @@
     <script>
         const copyButton = document.getElementById('copy-button');
         const secretKey = document.getElementById('secret-id');
-        secretKey.select()
+
         navigator.clipboard.writeText(secretKey.value)
           .catch((err) => {
             console.error('Error copying text: ', err);
+            secretKey.select();
+            document.execCommand('copy');
           });
+
     </script>
 {% endblock %}
