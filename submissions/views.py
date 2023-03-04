@@ -17,7 +17,7 @@ def get_or_create_student(request):
     return student[0]
 
 
-def view(request, assessment_id):
+def index(request, assessment_id):
     assessment = get_object_or_404(Assessment, pk=assessment_id)
     now = timezone.now().astimezone(pytz.timezone("Africa/Maseru"))
     alert = None
@@ -39,7 +39,7 @@ def view(request, assessment_id):
         "server_time": now,
         "alert": alert,
     }
-    return render(request, "submissions/view.html", context=context)
+    return render(request, "submissions/index.html", context=context)
 
 
 def __create_student_submission(request, student, assessment):
