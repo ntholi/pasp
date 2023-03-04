@@ -23,9 +23,9 @@ def get_term():
     current_date = datetime.now()
     current_year = current_date.year
     if current_date.month < 8:
-        semester = "02"  # Spring semester
+        semester = "02"
     else:
-        semester = "08"  # Fall semester
+        semester = "08"
     return f"{current_year}-{semester}"
 
 

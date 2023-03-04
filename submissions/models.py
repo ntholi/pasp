@@ -18,9 +18,9 @@ class Submission(models.Model):
     attachment = models.FileField()
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE)
     ip_address = models.GenericIPAddressField()
-    submission_time = models.DateTimeField(auto_now_add=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     submission_times = models.IntegerField(default=1)
+    submitted_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         student_number = self.student.student_number
