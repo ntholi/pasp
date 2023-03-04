@@ -25,7 +25,7 @@
                         <td>{{ submission.student }}</td>
                         <td>{{ submission.ip_address }}</td>
                         <td>{{ submission.submitted_at|date:"d/m/Y H:i:s"  }}</td>
-                        <td></td>
+                        <td><a href="{{ submission.attachment.url }}" download>Download</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
