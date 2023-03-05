@@ -6,12 +6,12 @@
     <hr />
     {% if newly_created %}
         <h3 class="h6 fw-normal text-success-emphasis">Assessment created successfully!</h3>
-        <p>An email with a secret id has been sent to <code>{{ assessment.email }}</code>, alternatively
-            you can copy and save the secret id bellow. You will use it to access student submissions</p>
-        <div class="input-group">
+        <p>An email with a secret ID has been sent to <code>nkhatho.class@gmail.com</code>. You can use this ID to access student submissions. Alternatively, you can copy and save the secret ID below.</p>
+        <div class="input-group" style="width: 50%">
           <input id="secret-id" type="text" class="form-control" value="{{ assessment.uuid }}">
           <button id="copy-button" class="btn btn-secondary" type="button">Copy</button>
         </div>
+        <p class="mt-4">To access the submissions, navigate to the assessment details page and enter the secret ID when prompted. Please keep this ID secure and do not share it with anyone who should not have access.</p>
     {% else %}
         <table class="table table-striped">
             <thead>
