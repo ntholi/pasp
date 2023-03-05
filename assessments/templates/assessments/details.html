@@ -5,8 +5,9 @@
     <p>{{ assessment.course_name }}</p>
     <hr />
     {% if newly_created %}
-        <h3 class="h6">Assessment created successfully</h3>
-        <p>Please copy and save the following secret id, you will use it to view student submissions</p>
+        <h3 class="h6 fw-normal text-success-emphasis">Assessment created successfully!</h3>
+        <p>An email with a secret id has been sent to <code>{{ assessment.email }}</code>, alternatively
+            you can copy and save the secret id bellow. You will use it to access student submissions</p>
         <div class="input-group">
           <input id="secret-id" type="text" class="form-control" value="{{ assessment.uuid }}">
           <button id="copy-button" class="btn btn-secondary" type="button">Copy</button>
