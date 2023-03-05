@@ -47,3 +47,5 @@ db.sqlite3
 .DS_Store
 /uploads/
 /.idea/dataSources.xml
+
+*.env
