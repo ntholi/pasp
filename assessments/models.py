@@ -38,7 +38,7 @@ def make_valid_file_name(name):
 
 class Assessment(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     lecturer = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     course_name = models.CharField(max_length=100)
@@ -72,4 +72,4 @@ class Assessment(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return self.name

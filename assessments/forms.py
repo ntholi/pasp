@@ -12,7 +12,10 @@ class AssessmentFormStep1(forms.ModelForm):
 class AssessmentFormStep2(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = ["title", "course_name", "start_time", "end_time", "question_paper"]
+        fields = ["course_name", "name", "start_time", "end_time", "question_paper"]
+        labels = {
+            "name": "Assessment Name",
+        }
         widgets = {
             "start_time": forms.widgets.DateTimeInput(
                 attrs={"type": "datetime-local", "class": "form-control"}

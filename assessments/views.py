@@ -74,7 +74,7 @@ def send_assessment_email(request, assessment):
     message = f"Dear {assessment.lecturer},\n\n"
     message += f"Please find below the details of the assessment you created:\n\n"
     message += f"Secret Id: {assessment.uuid}\n"
-    message += f"Title: {assessment.title}\n"
+    message += f"Title: {assessment.name}\n"
     message += f"Course Name: {assessment.course_name}\n\n"
     message += f"Click the link below to view the assessment details:\n"
     message += f"{assessment_url}\n\n"
