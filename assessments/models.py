@@ -42,7 +42,6 @@ class Assessment(models.Model):
     lecturer = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     course_name = models.CharField(max_length=100)
-    course_code = models.CharField(max_length=20, blank=True)
     question_paper = models.FileField(blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()

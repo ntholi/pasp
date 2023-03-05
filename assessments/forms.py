@@ -12,16 +12,8 @@ class AssessmentFormStep1(forms.ModelForm):
 class AssessmentFormStep2(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = [
-            "title",
-            "course_name",
-            "course_code",
-            "start_time",
-            "end_time",
-            'question_paper'
-        ]
+        fields = ["title", "course_name", "start_time", "end_time", "question_paper"]
         widgets = {
-            "course_code": forms.widgets.TextInput(attrs={"placeholder": "(Optional)"}),
             "start_time": forms.widgets.DateTimeInput(
                 attrs={"type": "datetime-local", "class": "form-control"}
             ),
@@ -30,12 +22,15 @@ class AssessmentFormStep2(forms.ModelForm):
             ),
         }
 
-    question_paper = forms.FileField(label='Question Paper', required=False,
-                                     widget=forms.ClearableFileInput(attrs={"accept": "application/pdf"}))
+    question_paper = forms.FileField(
+        label="Question Paper",
+        required=False,
+        widget=forms.ClearableFileInput(attrs={"accept": "application/pdf"}),
+    )
 
     def clean_question_paper(self):
-        question_paper = self.cleaned_data.get('question_paper', False)
+        question_paper = self.cleaned_data.get("question_paper", False)
         if question_paper:
-            if question_paper.content_type != 'application/pdf':
-                raise forms.ValidationError('Only PDF files are allowed.')
+            if question_paper.content_type != "application/pdf":
+                raise forms.ValidationError("Only PDF files are allowed.")
             return question_paper
