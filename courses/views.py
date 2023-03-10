@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.views.generic import (
     ListView,
     DetailView,
-    CreateView,
     UpdateView,
     DeleteView,
 )
@@ -17,10 +16,8 @@ def create_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
-            # course = form.save(commit=False)
-            # course.save(user=request.user)
-            form.save(user=request.user)  # to save the ManyToManyField
-            return redirect('courses:index')  # redirect to course detail view
+            form.save(user=request.user)
+            return redirect('courses:index')
     else:
         form = CourseForm()
     return render(request, "courses/create.html", {'form': form})
