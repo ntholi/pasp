@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import render, redirect
@@ -7,6 +8,7 @@ from assessments.forms import AssessmentFormStep1, AssessmentFormStep2
 from assessments.models import Assessment
 
 
+@login_required
 def index(request):
     return render(request, "assessments/index.html")
 

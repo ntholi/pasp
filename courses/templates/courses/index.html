@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'courses/nav.html' %}
+    <h1>List of Courses</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{% url 'courses:details' course.id %}">{{ course.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
