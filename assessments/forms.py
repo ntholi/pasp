@@ -12,7 +12,7 @@ class AssessmentFormStep1(forms.ModelForm):
 class AssessmentFormStep2(forms.ModelForm):
     class Meta:
         model = Assessment
-        fields = ["course_name", "name", "start_time", "end_time", "question_paper"]
+        fields = ["name", "start_time", "end_time", "question_paper"]
         labels = {
             "name": "Assessment Name",
         }

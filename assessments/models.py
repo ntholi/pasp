@@ -9,6 +9,8 @@ from django.conf import settings
 
 from django.db import models
 
+from courses.models import Course
+
 
 def get_image():
     file_path = finders.find("images/covers")
@@ -41,13 +43,15 @@ class Assessment(models.Model):
     name = models.CharField(max_length=100)
     lecturer = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    course_name = models.CharField(max_length=100)
     question_paper = models.FileField(blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
     upload_folder = models.FilePathField()
     date_created = models.DateTimeField(auto_now_add=True)
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE
+    )
 
     def get_upload_folder(self):
         lecturer = make_valid_file_name(self.lecturer)

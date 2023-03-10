@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load home_filters %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1>{{ course }}</h1>
+    <p>{{ time }}</p>
+    <div class="d-flex flex-wrap gap-3">
+    {% for assessment in course.assessments %}
+        {% if assessment.start_time|now_or_after %}
+            <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
+                class="card clickable" href="{% url 'submissions:index' assessment.id %}">
+                {% include 'home/assessment_card.html' with assessment=assessment %}
+            </a>
+        {% else %}
+            <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
+                class="card clickable">
+                {% include 'home/assessment_card.html' with assessment=assessment %}
+            </a>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'home.js' %}"></script>
+{% endblock %}

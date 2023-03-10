@@ -23,6 +23,10 @@ def create_course(request):
     return render(request, "courses/create.html", {'form': form})
 
 
+def course_details(request, pk):
+    course = Course.objects.get(pk=pk)
+    return render(request, "courses/details.html", {'course': course})
+
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
     template_name = "courses/index.html"
@@ -32,11 +36,6 @@ class CourseListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Course.objects.filter(lecturers=self.request.user)
 
-
-class CourseDetailView(LoginRequiredMixin, DetailView):
-    model = Course
-    template_name = "courses/details.html"
-    context_object_name = "course"
 
 
 class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
