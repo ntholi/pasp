@@ -16,21 +16,9 @@
     <hr />
     <div class="d-flex flex-wrap gap-3">
     {% for assessment in assessments %}
-        {% if assessment.start_time|now_or_after %}
-            <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
-                class="card clickable" href="{% url 'submissions:index' assessment.id %}">
-                {% include 'home/assessment_card.html' with assessment=assessment %}
-            </a>
-        {% else %}
-            <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
-                class="card clickable">
-                {% include 'home/assessment_card.html' with assessment=assessment %}
-            </a>
-        {% endif %}
+        <a id="assessment" class="card clickable">
+            {% include 'courses/assessment_card.html' with assessment=assessment %}
+        </a>
     {% endfor %}
     </div>
-{% endblock %}
-
-{% block scripts %}
-    <script src="{% static 'home.js' %}"></script>
 {% endblock %}
