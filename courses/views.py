@@ -25,7 +25,9 @@ def create_course(request):
 
 def course_details(request, pk):
     course = Course.objects.get(pk=pk)
-    return render(request, "courses/details.html", {'course': course})
+    assessments = course.assessment_set.all()
+    return render(request, "courses/details.html", {'course': course, 'assessments': assessments})
+
 
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
@@ -35,7 +37,6 @@ class CourseListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Course.objects.filter(lecturers=self.request.user)
-
 
 
 class CourseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

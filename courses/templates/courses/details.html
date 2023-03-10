@@ -8,9 +8,14 @@
 
 {% block content %}
     <h1>{{ course }}</h1>
-    <p>{{ time }}</p>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-0 mb-0">
+        <h3 class="fs-5 fw-normal text-muted">Assessments</h3>
+        <a class="btn btn-light" href="{% url 'assessments:create' %}">Create New</a>
+    </div>
+
+    <hr />
     <div class="d-flex flex-wrap gap-3">
-    {% for assessment in course.assessments %}
+    {% for assessment in assessments %}
         {% if assessment.start_time|now_or_after %}
             <a id="assessment" data-start-time="{{ assessment.start_time|date:'Y/m/d H:i:s' }}"
                 class="card clickable" href="{% url 'submissions:index' assessment.id %}">
