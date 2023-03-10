@@ -10,7 +10,7 @@
     <h1>{{ course }}</h1>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-0 mb-0">
         <h3 class="fs-5 fw-normal text-muted">Assessments</h3>
-        <a class="btn btn-light" href="{% url 'assessments:create' %}">Create New</a>
+        <a class="btn btn-light" href="{% url 'assessments:create' %}?course={{ course.id }}">Create New</a>
     </div>
 
     <hr />

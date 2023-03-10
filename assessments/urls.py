@@ -5,7 +5,6 @@ app_name = "assessments"
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("create/", views.create_step1, name="create"),
-    path("create/step2/", views.create_step2, name="create_step2"),
+    path("create/", views.create, name="create"),
     path("<str:uuid>/", views.details, name="details"),
 ]

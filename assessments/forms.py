@@ -3,13 +3,7 @@ from assessments.models import Assessment
 from django import forms
 
 
-class AssessmentFormStep1(forms.ModelForm):
-    class Meta:
-        model = Assessment
-        fields = ["lecturer", "email"]
-
-
-class AssessmentFormStep2(forms.ModelForm):
+class AssessmentForm(forms.ModelForm):
     class Meta:
         model = Assessment
         fields = ["name", "start_time", "end_time", "question_paper"]
