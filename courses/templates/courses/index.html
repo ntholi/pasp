@@ -6,9 +6,7 @@
     <h1>List of Courses</h1>
     <ul>
         {% for course in courses %}
-            <li>
-                <a href="{% url 'courses:details' course.id %}">{{ course.name }}</a>
-            </li>
+            {% include 'courses/course_card.html' with course=course %}
         {% endfor %}
     </ul>
 {% endblock %}
