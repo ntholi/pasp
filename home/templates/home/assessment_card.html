@@ -4,8 +4,8 @@
     <p id="assessment-timer"></p>
     <img src="{% static 'images/covers/'|add:assessment.cover_image %}" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title text-truncate">{{ assessment.course_name }}</h5>
-        <p class="card-text">{{ assessment.title }}</p>
+        <h5 class="card-title text-truncate">{{ assessment.course }}</h5>
+        <p class="card-text">{{ assessment.name }}</p>
     </div>
     <div class="card-footer d-flex justify-content-between time-display">
         <div>
