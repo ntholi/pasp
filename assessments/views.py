@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from assessments.forms import AssessmentForm
@@ -15,9 +15,7 @@ def index(request):
 
 @login_required
 def details(request, pk):
-    assessment = Assessment.objects.get(pk)
-    if not assessment:
-        raise Http404("Assessment does not exist")
+    assessment = get_object_or_404(Assessment, pk=pk)
     submissions = assessment.submission_set.all()
     return render(
         request,
@@ -43,7 +41,7 @@ def create(request):
             assessment.course_id = request.session.get("course", None)
             assessment.created_by = request.user
             assessment.save()
-            redirect_url = reverse("assessments:details", args=(assessment.id,))
+            redirect_url = reverse("assessments:index", args=(assessment.id,))
             return redirect(f"{redirect_url}?newly_created=1")
 
     return render(request, "assessments/create.html", {"form": form})
