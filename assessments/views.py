@@ -36,7 +36,6 @@ def create(request):
             assessment.course_id = request.session.get("course", None)
             assessment.created_by = request.user
             assessment.save()
-            redirect_url = reverse("assessments:index", args=(assessment.id,))
-            return redirect(f"{redirect_url}?newly_created=1")
+            return redirect("courses:index")
 
     return render(request, "assessments/create.html", {"form": form})
