@@ -1,20 +1,21 @@
 {% load static %}
 
-<div>
-    <p id="assessment-timer"></p>
-    <img src="{% static 'images/covers/'|add:assessment.cover_image %}" class="card-img-top">
-    <div class="card-body">
-        <h5 class="card-title text-truncate">{{ assessment.name }}</h5>
-        <small>By: {{ assessment.created_by }}</small>
+<img src="{% static 'images/covers/'|add:assessment.cover_image %}" class="card-img-top">
+<div class="card-body">
+    <h5 class="card-title text-truncate">{{ assessment.name }}</h5>
+</div>
+
+<div class="card-footer time-display">
+    <div class="mb-0 d-flex justify-content-between">
+        <p class="text-muted">{{ assessment.start_time|date:"d M Y" }}</p>
+        <div>
+            (<small>{{ assessment.start_time|time:"H:i" }}</small>
+        to
+        <small>{{ assessment.end_time|time:"H:i" }}</small>)
+        </div>
     </div>
-    <div class="card-footer d-flex justify-content-between time-display">
-        <div>
-            <p class="text-muted mb-0">Start Time</p>
-            <p>{{ assessment.start_time|time:"H:i" }}</p>
-        </div>
-        <div>
-            <p class="text-muted mb-0">End Time</p>
-            <p>{{ assessment.end_time|time:"H:i" }}</p>
-        </div>
+    <div class="d-flex justify-content-between">
+        <p class="text-muted">Created By</p>
+        <p>{{ assessment.created_by }}</p>
     </div>
 </div>
