@@ -10,3 +10,6 @@ class Course(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.code})"
+
+    def lecturer_names(self):
+        return ", ".join([user.get_full_name() for user in self.lecturers.all()])
