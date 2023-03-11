@@ -9,11 +9,6 @@ from assessments.models import Assessment
 
 
 @login_required
-def index(request):
-    return render(request, "assessments/index.html")
-
-
-@login_required
 def details(request, pk):
     assessment = get_object_or_404(Assessment, pk=pk)
     submissions = assessment.submission_set.all()
