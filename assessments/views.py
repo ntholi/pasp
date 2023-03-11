@@ -4,7 +4,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from assessments.forms import AssessmentFormStep1, AssessmentForm
+from assessments.forms import AssessmentForm
 from assessments.models import Assessment
 
 
@@ -13,6 +13,7 @@ def index(request):
     return render(request, "assessments/index.html")
 
 
+@login_required
 def details(request, uuid):
     assessment = Assessment.objects.get(uuid=uuid)
     if not assessment:
@@ -29,18 +30,23 @@ def details(request, uuid):
     )
 
 
+@login_required
 def create(request):
     form = AssessmentForm()
+    course = request.GET.get("course", None)
+    if course:
+        request.session["course"] = course
     if request.method == "POST":
         form = AssessmentForm(request.POST, request.FILES)
         if form.is_valid():
             assessment = form.save(commit=False)
+            assessment.lecturer = request.user
             assessment.save()
             redirect_url = reverse("assessments:details", args=(assessment.uuid,))
             send_assessment_email(request, assessment)
             return redirect(f"{redirect_url}?newly_created=1")
 
-    return render(request, "assessments/create_step2.html", {"form": form})
+    return render(request, "assessments/create.html", {"form": form})
 
 
 def send_assessment_email(request, assessment):

@@ -1,11 +1,11 @@
 import os
 from pathlib import Path
 import random
-import uuid
 from django.contrib.staticfiles import finders
 import string
 from datetime import datetime
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from django.db import models
 
@@ -39,23 +39,18 @@ def make_valid_file_name(name):
 
 
 class Assessment(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
-    lecturer = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    question_paper = models.FileField(blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     cover_image = models.CharField(max_length=100, blank=True)
     upload_folder = models.FilePathField()
+    question_paper = models.FileField(blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
-    course = models.ForeignKey(
-        Course, on_delete=models.CASCADE
-    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_upload_folder(self):
-        lecturer = make_valid_file_name(self.lecturer)
-        folder_path = f"{get_term()}/{lecturer}/Assessment"
+        folder_path = f"{get_term()}/Assessment"
         folder_path = Path(folder_path)
         media_url = settings.MEDIA_ROOT
 

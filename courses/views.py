@@ -1,7 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import (
     ListView,
-    DetailView,
     UpdateView,
     DeleteView,
 )
@@ -12,21 +12,25 @@ from .models import Course
 from django.urls import reverse_lazy
 
 
+@login_required
 def create_course(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save(user=request.user)
-            return redirect('courses:index')
+            return redirect("courses:index")
     else:
         form = CourseForm()
-    return render(request, "courses/create.html", {'form': form})
+    return render(request, "courses/create.html", {"form": form})
 
 
+@login_required
 def course_details(request, pk):
     course = Course.objects.get(pk=pk)
     assessments = course.assessment_set.all()
-    return render(request, "courses/details.html", {'course': course, 'assessments': assessments})
+    return render(
+        request, "courses/details.html", {"course": course, "assessments": assessments}
+    )
 
 
 class CourseListView(LoginRequiredMixin, ListView):
