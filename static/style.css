@@ -63,3 +63,11 @@ footer {
 .time-display {
     font-size: 0.9rem;
 }
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
