@@ -1,8 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 
 from assessments.forms import AssessmentForm
 from assessments.models import Assessment
@@ -26,16 +23,14 @@ def details(request, pk):
 @login_required
 def create(request):
     form = AssessmentForm()
-    course = request.GET.get("course", None)
-    if course:
-        request.session["course"] = course
-    if request.method == "POST":
+    course_id = request.GET.get("course", None)
+    if course_id and request.method == "POST":
         form = AssessmentForm(request.POST, request.FILES)
         if form.is_valid():
             assessment = form.save(commit=False)
-            assessment.course_id = request.session.get("course", None)
+            assessment.course_id = course_id
             assessment.created_by = request.user
             assessment.save()
-            return redirect("courses:index")
+            return redirect("courses:details", pk=course_id)
 
     return render(request, "assessments/create.html", {"form": form})
