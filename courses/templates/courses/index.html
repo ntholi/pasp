@@ -2,8 +2,15 @@
 {% load static %}
 
 {% block content %}
-    {% include 'courses/nav.html' %}
-    <h1>List of Courses</h1>
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-0 mb-0">
+        <h1>Courses</h1>
+        <a class="btn btn-light" href="{% url 'courses:create' %}">
+            <i class="fas fa-plus"></i>
+            Create
+        </a>
+    </div>
+    <hr />
     <ul>
         {% for course in courses %}
             {% include 'courses/course_card.html' with course=course %}
