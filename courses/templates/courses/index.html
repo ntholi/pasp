@@ -11,9 +11,7 @@
         </a>
     </div>
     <hr />
-    <ul>
-        {% for course in courses %}
-            {% include 'courses/course_card.html' with course=course %}
-        {% endfor %}
-    </ul>
+    {% for course in courses %}
+        {% include 'courses/course_card.html' with course=course %}
+    {% endfor %}
 {% endblock %}
