@@ -3,15 +3,22 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+    <h2 class="fw-normal">Create Assessment</h2>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-0 mb-0">
+        <h3 class="fs-5 fw-normal text-muted">{{ course }}</h3>
+        <button class="btn btn-outline-light" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </button>
+    </div>
+    <hr />
     <div class="row">
-        <div class="col-md-6 offset-3">
-            <h1 class="display-5">Create Assessment</h1>
+        <div class="col-md-6">
            <form method="post" class="form" enctype="multipart/form-data">
                {% csrf_token %}
                {{ form|crispy }}
-               <button type="submit" class="btn btn-primary">Create</button>
+              <button type="submit" class="btn btn-secondary px-5">Create</button>
            </form>
-            </div>
         </div>
     </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from assessments.forms import AssessmentForm
 from assessments.models import Assessment
+from courses.models import Course
 
 
 @login_required
@@ -24,6 +25,7 @@ def details(request, pk):
 def create(request):
     form = AssessmentForm()
     course_id = request.GET.get("course", None)
+    course = Course.objects.get(pk=course_id)
     if course_id and request.method == "POST":
         form = AssessmentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -33,4 +35,4 @@ def create(request):
             assessment.save()
             return redirect("courses:details", pk=course_id)
 
-    return render(request, "assessments/create.html", {"form": form})
+    return render(request, "assessments/create.html", {"form": form, 'course': course})
