@@ -7,8 +7,9 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome, {{ student_name }}</h1>
-    <p>{{ time }}</p>
+    <h1>{{ student_name }}</h1>
+    <h3 class="fs-5 fw-normal text-muted">{{ student_number }}</h3>
+    <hr>
     <div class="d-flex flex-wrap gap-3">
     {% for assessment in assessments %}
         {% if assessment.start_time|now_or_after %}

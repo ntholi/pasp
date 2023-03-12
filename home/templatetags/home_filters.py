@@ -1,5 +1,5 @@
 from django import template
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
 register = template.Library()
 
