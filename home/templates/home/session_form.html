@@ -15,7 +15,7 @@
                     <label for="student_name">Names and Surname</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="student_number" name="student_number" minlength="9" maxlength="9" placeholder="Student Number" autocomplete="off" required>
+                    <input type="text" class="form-control" id="student_number" name="student_number" minlength="9" maxlength="9" placeholder="Student Number" autocomplete="off" required pattern="\d+" title="Invalid student number">
                     <label for="student_number">Student Number</label>
                 </div>
                 <div class="d-grid">
