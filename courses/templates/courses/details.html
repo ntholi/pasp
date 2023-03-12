@@ -19,7 +19,7 @@
 
     <div class="d-flex flex-wrap gap-3">
     {% for assessment in assessments %}
-        <a id="assessment" class="card clickable">
+        <a id="assessment" class="card clickable" href="{% url 'assessments:details' assessment.id %}">
             {% include 'courses/assessment_card.html' with assessment=assessment %}
         </a>
     {% endfor %}
