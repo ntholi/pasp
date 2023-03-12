@@ -5,8 +5,17 @@
         <div class="col">
             <div class="d-flex justify-content-between">
                 <p>Practical Assessment Submission Platform (PASP)</p>
-                <a class="text-secondary text-decoration-none" href="{% url 'courses:index' %}">Dashboard</a>
-            </div>
+                {% if user.is_authenticated %}
+                    <a class="text-secondary text-decoration-none" href="{% url 'account_logout' %}">
+                        Logout
+                    </a>
+                {% else %}
+                    <a class="text-secondary text-decoration-none" href="{% url 'account_login' %}">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i>
+                        Login
+                    </a>
+                {% endif %}
+           </div>
             <p>
                 <span class="d-block text-muted">Brought to you by</span>
                 The Faculty of Information and Communication Technology <br>Limkokwing University, Lesotho</p>
