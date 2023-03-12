@@ -1,12 +1,23 @@
 {% extends 'base/base.html' %}
-{% load static %}
-
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>Create Course</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Create">
-    </form>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-0 mb-0">
+        <h1 class="fw-normal">Courses</h1>
+        <a class="btn btn-outline-light" href="{% url 'courses:index' %}">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </a>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-secondary px-5">Create</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
