@@ -71,3 +71,19 @@ footer {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.google-signin-button {
+  display: inline-block;
+  background-color: #4285F4;
+    text-decoration: none;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.google-signin-button:hover {
+  background-color: #357AE8;
+}

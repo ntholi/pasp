@@ -14,7 +14,7 @@
             <div class="d-flex align-items-center">
               <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="{{ user.username }}" class="avatar me-3" data-bs-toggle="dropdown" aria-expanded="false">
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a href="#">Logout</a></li>
+                <li><a class="text-decoration-none ps-4" style="color: inherit; font-size: 0.85rem" href="{% url 'account_logout' %}">Logout</a></li>
               </ul>
             </div>
         {% endif %}
